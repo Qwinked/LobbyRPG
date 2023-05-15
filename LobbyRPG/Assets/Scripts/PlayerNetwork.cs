@@ -6,6 +6,7 @@ using UnityEngine;
 public class PlayerNetwork : NetworkBehaviour
 {
 
+    
     private NetworkVariable<int> randomNumber = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
 
     public override void OnNetworkSpawn()
