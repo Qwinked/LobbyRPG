@@ -6,11 +6,27 @@ using UnityEngine;
 public class PlayerNetwork : NetworkBehaviour
 {
 
+    private NetworkVariable<int> randomNumber = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
+
+    public override void OnNetworkSpawn()
+    {
+        randomNumber.OnValueChanged += (int previousValue, int newValue) =>
+        {
+            Debug.Log(OwnerClientId + "; randomNumber:" + randomNumber.Value);
+        };
+    }
+
 
     // Update is called once per frame
     void Update()
     {
-        if (!IsOwner) return;
+        
+        if (!IsOwner) return; //As in the Server Owner
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            randomNumber.Value = Random.Range(0, 100);
+        }
 
         Vector3 moveDir = new Vector3(0, 0, 0);
 
