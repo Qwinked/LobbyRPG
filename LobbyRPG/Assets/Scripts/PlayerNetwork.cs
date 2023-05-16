@@ -8,13 +8,21 @@ public class PlayerNetwork : NetworkBehaviour
 
     
     private NetworkVariable<int> randomNumber = new NetworkVariable<int>(1, NetworkVariableReadPermission.Everyone, NetworkVariableWritePermission.Owner);
-
+    public GameObject playerCamera;
     public override void OnNetworkSpawn()
     {
         randomNumber.OnValueChanged += (int previousValue, int newValue) =>
         {
             Debug.Log(OwnerClientId + "; randomNumber:" + randomNumber.Value);
         };
+
+        if (IsLocalPlayer == true)
+            
+            playerCamera.SetActive(true);
+        else
+            playerCamera.SetActive(false);
+             
+        
     }
 
 
